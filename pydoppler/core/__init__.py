@@ -145,3 +145,133 @@ class API:
         """
         return [f"{cls.ROOT_URL}/environments/environment", {"project": project_name, "environment": environment}, {"name": name, "slug": slug}]
     
+    @classmethod
+    def configs(cls, project_name: str, page: int, per_page: int) -> list[str, dict[str, int]]:
+        """
+        Fetch all configs.
+
+        :param project_name: The project name.
+        :param page: The page number
+        :param per_page: The number of items to fetch per page.
+        :return: fist element is the url, second element is query parameters.
+        """
+        return [f"{cls.ROOT_URL}/configs", {"project": project_name, "page": page, "per_page": per_page}]
+    
+    @classmethod
+    def configs_create(cls, project_name: str, environment: str, config_name: str) -> list[str, dict[str, str]]:
+        """
+        Create a new branch config.
+
+        :param project_name: Unique identifier for the project object.
+        :param environment: Identifier for the environment object.
+        :param config_name: Name of the new branch config.
+        :return: fist element is the url, second element is body parameters.
+        """
+        return [f"{cls.ROOT_URL}/configs", {"project": project_name, "environment": environment, "name": config_name}]
+    
+    @classmethod
+    def configs_retrieve(cls, project_name: str, config_name: str) -> list[str, dict[str, str]]:
+        """
+        Fetch a config's details.
+
+        :param project_name: Unique identifier for the project object.
+        :param config_name: Name of the config object.
+        :return: fist element is the url, second element is query parameters.
+        """
+        return [f"{cls.ROOT_URL}/configs/config", {"project": project_name, "name": config_name}]
+    
+    @classmethod
+    def configs_update(cls, project_name: str, config_name: str, config_new_name: str) -> list[str, dict[str, str]]:
+        """
+        Modify an existing config.
+
+        :param project_name: Unique identifier for the project object.
+        :param config_name: Name of the config object.
+        :param config_new_name: New name of the config.
+        :return: fist element is the url, second element is body parameters.
+        """
+        return [f"{cls.ROOT_URL}/configs/config", {"project": project_name, "config": config_name, "name": config_new_name}]
+    
+    @classmethod
+    def configs_delete(cls, project_name: str, config_name: str) -> list[str, dict[str, str]]:
+        """
+        Permanently delete the config.
+
+        :param project_name: Unique identifier for the project object.
+        :param config_name: Name of the config object.
+        :return: fist element is the url, second element is body parameters.
+        """
+        return [f"{cls.ROOT_URL}/configs/config", {"project": project_name, "config": config_name}]
+    
+    @classmethod
+    def configs_clone(cls, project_name: str, config_name: str, config_new_name: str) -> list[str, dict[str, str]]:
+        """
+        Create a new branch config by cloning another. This duplicates a branch config and all its secrets.
+
+        :param project_name: Unique identifier for the project object.
+        :param config_name: Name of the config object.
+        :param config_new_name: New name of the config.
+        :return: fist element is the url, second element is body parameters.
+        """
+        return [f"{cls.ROOT_URL}/configs/config/clone", {"project": project_name, "config": config_name, "name": config_new_name}]
+    
+    @classmethod
+    def configs_lock(cls, project_name: str, config_name: str) -> list[str, dict[str, str]]:
+        """
+        Prevent the config from being renamed or deleted.
+
+        :param project_name: Unique identifier for the project object.
+        :param config_name: Name of the config object.
+        :return: fist element is the url, second element is body parameters.
+        """
+        return [f"{cls.ROOT_URL}/configs/config/lock", {"project": project_name, "config": config_name}]
+    
+    @classmethod
+    def configs_unlock(cls, project_name: str, config_name: str) -> list[str, dict[str, str]]:
+        """
+        Allow the config to be renamed and/or deleted.
+
+        :param project_name: Unique identifier for the project object.
+        :param config_name: Name of the config object.
+        :return: fist element is the url, second element is body parameters.
+        """
+        return [f"{cls.ROOT_URL}/configs/config/unlock", {"project": project_name, "config": config_name}]
+    
+    @classmethod
+    def configs_logs(cls, project_name: str, config_name: str, page: int, per_page: int) -> list[str, dict[str, str | int]]:
+        """
+        Config Logs.
+
+        :param project_name: Unique identifier for the project object.
+        :param config_name: Name of the config object.
+        :param page: Page number.
+        :param per_page: Number of results to return per page.
+        :return: fist element is the url, second element is query parameters.
+        """
+        return [f"{cls.ROOT_URL}/configs/config/logs", {"project": project_name, "config": config_name, "page": page, "per_page": per_page}]
+    
+    @classmethod
+    def configs_logs_retrieve(cls, project_name: str, config_name: str, log_id: str) -> list[str, dict[str, str]]:
+        """
+        Config Log.
+
+        :param project_name: Unique identifier for the project object.
+        :param config_name: Name of the config object.
+        :param log_id: Unique identifier for the log object.
+        :return: fist element is the url, second element is query parameters.
+        """
+        return [f"{cls.ROOT_URL}/configs/config/logs", {"project": project_name, "config": config_name, "log": log_id}]
+    
+    @classmethod
+    def configs_logs_rollback(cls, project_name: str, config_name: str, log_id: str) -> list[str, dict[str, str]]:
+        """
+        Config Log.
+
+        :param project_name: Unique identifier for the project object.
+        :param config_name: Name of the config object.
+        :param log_id: Unique identifier for the log object.
+        :return: fist element is the url, second element is query parameters.
+        """
+        return [f"{cls.ROOT_URL}/configs/config/logs/log/rollback", {"project": project_name, "config": config_name, "log": log_id}]
+
+
