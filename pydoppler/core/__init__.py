@@ -1,5 +1,4 @@
 
-
 class API:
     ROOT_URL = 'https://api.doppler.io/v3'
 
@@ -87,3 +86,62 @@ class API:
         :return: fist element is the url, second element is body parameters.
         """
         return [f"{cls.ROOT_URL}/projects/project", {"project": project_name}]
+    
+    @classmethod
+    def environments(cls, project_name: str) -> list[str, dict[str, str]]:
+        """
+        Get all environments.
+
+        :param project_name: The project name.
+        :return: fist element is the url, second element is query parameters.
+        """
+        return [f"{cls.ROOT_URL}/environments", {"project": project_name}]
+    
+    @classmethod
+    def environments_retrieve(cls, project_name: str, environment: str) -> list[str, dict[str, str]]:
+        """
+        Retrieve a specific environment.
+
+        :param project_name: The project name.
+        :param environment: The environment's slug.
+
+        :return: fist element is the url, second element is query parameters.
+        """
+        return [f"{cls.ROOT_URL}/environments/environment", {"project": project_name, "environment": environment}]
+    
+    @classmethod
+    def environments_create(cls, project_name: str, name: str, slug: str) -> list[str, dict[str, str], dict[str, str]]:
+        """
+        Create a new environment.
+
+        :param project_name: The project name.
+        :param name: The name of the environment.
+        :param slug: Desired slug.
+        :return: fist element is the url, second element is body parameters, third element is body parameters.
+        """
+        return [f"{cls.ROOT_URL}/environments", {"project": project_name}, {"name": name, "slug": slug}]
+
+    @classmethod
+    def environments_delete(cls, project_name: str, environment: str) -> list[str, dict[str, str]]:
+        """
+        Delete a specific environment.
+
+        :param project_name: The project name.
+        :param environment: The environment's slug.
+        :return: first element is the url, second element is query parameters.
+        """
+        return [f"{cls.ROOT_URL}/environments/environment", {"project": project_name, "environment": environment}]
+
+    @classmethod
+    def environments_rename(cls, project_name: str, environment: str, name: str, slug: str) -> list[str, dict[str, str], dict[str, str]]:
+        """
+        Rename a specific environment.
+
+        :param project_name: The project name.
+        :param environment: The environment's slug.
+        :param name: The name of the environment.
+        :param slug: Desired slug.
+        :return: first element is the url, second element is query parameters, third element is body parameters.
+        """
+        return [f"{cls.ROOT_URL}/environments/environment", {"project": project_name, "environment": environment}, {"name": name, "slug": slug}]
+    
