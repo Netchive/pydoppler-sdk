@@ -1,5 +1,5 @@
 
-class API:
+class APIObject:
     ROOT_URL = 'https://api.doppler.io/v3'
 
     @classmethod
