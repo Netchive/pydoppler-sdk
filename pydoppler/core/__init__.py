@@ -1,3 +1,4 @@
+import httpx
 
 class APIObject:
     ROOT_URL = 'https://api.doppler.io/v3'
@@ -12,7 +13,18 @@ class APIObject:
         return f"{cls.ROOT_URL}/workspace"
     
     @classmethod
-    def activity_logs(cls, page: int, per_page: int) -> list[str, dict[str, int]]:
+    def workspace_update(cls, workspace_name: str, billing_email: str) -> list[str | dict[str, str]]:
+        """
+        Update workspace url and payload.
+
+        :param workspace_name: The workspace name.
+        :param billing_email: The billing email.
+        :return: The workspace URL.
+        """
+        return [f"{cls.workspace()}", {"name": workspace_name, "billing_email": billing_email}]
+    
+    @classmethod
+    def activity_logs(cls, page: int, per_page: int) -> list[str | dict[str, int]]:
         """
         Get the activity logs with pagination.
 
@@ -23,7 +35,7 @@ class APIObject:
         return [f"{cls.ROOT_URL}/logs", {'page': page, 'per_page': per_page}]
     
     @classmethod
-    def activity_logs_retrieve(cls, log_id: str) -> list[str, dict[str, str]]:
+    def activity_logs_retrieve(cls, log_id: str) -> list[str | dict[str, str]]:
         """
         retrieve an activity log.
 
@@ -33,7 +45,7 @@ class APIObject:
         return [f"{cls.ROOT_URL}/logs/log", {"log": log_id}]
     
     @classmethod
-    async def projects(cls, page: int, per_page: int) -> list[str, dict[str, int]]:
+    async def projects(cls, page: int, per_page: int) -> list[str | dict[str, int]]:
         """
         Get the projects with pagination.
 
@@ -44,7 +56,7 @@ class APIObject:
         return [f"{cls.ROOT_URL}/projects", {'page': page, 'per_page': per_page}]
     
     @classmethod
-    def projects_create(cls, name: str, description: str) -> list[str, dict[str, str]]:
+    def projects_create(cls, name: str, description: str) -> list[str | dict[str, str]]:
         """
         Create a project.
 
@@ -55,7 +67,7 @@ class APIObject:
         return [f"{cls.ROOT_URL}/projects", {"name": name, "description": description}]
 
     @classmethod
-    def projects_retrieve(cls, project_name: str) -> list[str, dict[str, str]]:
+    def projects_retrieve(cls, project_name: str) -> list[str | dict[str, str]]:
         """
         Retrieve a project.
 
@@ -65,7 +77,7 @@ class APIObject:
         return [f"{cls.ROOT_URL}/projects/project", {"project": project_name}]
     
     @classmethod
-    def projects_update(cls, project_name: str, project_new_name: str, description: str) -> list[str, dict[str, str]]:
+    def projects_update(cls, project_name: str, project_new_name: str, description: str) -> list[str |  dict[str, str]]:
         """
         Update a project.
 
@@ -78,7 +90,7 @@ class APIObject:
         return [f"{cls.ROOT_URL}/projects", {"project": project_name, "name": project_new_name, "description": description}]
 
     @classmethod
-    def projects_delete(cls, project_name: str) -> list[str, dict[str, str]]:
+    def projects_delete(cls, project_name: str) -> list[str | dict[str, str]]:
         """
         Delete a project.
 
@@ -88,7 +100,7 @@ class APIObject:
         return [f"{cls.ROOT_URL}/projects/project", {"project": project_name}]
     
     @classmethod
-    def environments(cls, project_name: str) -> list[str, dict[str, str]]:
+    def environments(cls, project_name: str) -> list[str | dict[str, str]]:
         """
         Get all environments.
 
@@ -98,7 +110,7 @@ class APIObject:
         return [f"{cls.ROOT_URL}/environments", {"project": project_name}]
     
     @classmethod
-    def environments_retrieve(cls, project_name: str, environment: str) -> list[str, dict[str, str]]:
+    def environments_retrieve(cls, project_name: str, environment: str) -> list[str | dict[str, str]]:
         """
         Retrieve a specific environment.
 
@@ -110,7 +122,7 @@ class APIObject:
         return [f"{cls.ROOT_URL}/environments/environment", {"project": project_name, "environment": environment}]
     
     @classmethod
-    def environments_create(cls, project_name: str, name: str, slug: str) -> list[str, dict[str, str], dict[str, str]]:
+    def environments_create(cls, project_name: str, name: str, slug: str) -> list[str | dict[str, str] | dict[str, str]]:
         """
         Create a new environment.
 
@@ -122,7 +134,7 @@ class APIObject:
         return [f"{cls.ROOT_URL}/environments", {"project": project_name}, {"name": name, "slug": slug}]
 
     @classmethod
-    def environments_delete(cls, project_name: str, environment: str) -> list[str, dict[str, str]]:
+    def environments_delete(cls, project_name: str, environment: str) -> list[str | dict[str, str]]:
         """
         Delete a specific environment.
 
@@ -133,7 +145,7 @@ class APIObject:
         return [f"{cls.ROOT_URL}/environments/environment", {"project": project_name, "environment": environment}]
 
     @classmethod
-    def environments_rename(cls, project_name: str, environment: str, name: str, slug: str) -> list[str, dict[str, str], dict[str, str]]:
+    def environments_rename(cls, project_name: str, environment: str, name: str, slug: str) -> list[str | dict[str, str] | dict[str, str]]:
         """
         Rename a specific environment.
 
@@ -146,7 +158,7 @@ class APIObject:
         return [f"{cls.ROOT_URL}/environments/environment", {"project": project_name, "environment": environment}, {"name": name, "slug": slug}]
     
     @classmethod
-    def configs(cls, project_name: str, page: int, per_page: int) -> list[str, dict[str, int]]:
+    def configs(cls, project_name: str, page: int, per_page: int) -> list[str | dict[str, str | int]]:
         """
         Fetch all configs.
 
@@ -158,7 +170,7 @@ class APIObject:
         return [f"{cls.ROOT_URL}/configs", {"project": project_name, "page": page, "per_page": per_page}]
     
     @classmethod
-    def configs_create(cls, project_name: str, environment: str, config_name: str) -> list[str, dict[str, str]]:
+    def configs_create(cls, project_name: str, environment: str, config_name: str) -> list[str | dict[str, str]]:
         """
         Create a new branch config.
 
@@ -170,7 +182,7 @@ class APIObject:
         return [f"{cls.ROOT_URL}/configs", {"project": project_name, "environment": environment, "name": config_name}]
     
     @classmethod
-    def configs_retrieve(cls, project_name: str, config_name: str) -> list[str, dict[str, str]]:
+    def configs_retrieve(cls, project_name: str, config_name: str) -> list[str | dict[str, str]]:
         """
         Fetch a config's details.
 
@@ -181,7 +193,7 @@ class APIObject:
         return [f"{cls.ROOT_URL}/configs/config", {"project": project_name, "name": config_name}]
     
     @classmethod
-    def configs_update(cls, project_name: str, config_name: str, config_new_name: str) -> list[str, dict[str, str]]:
+    def configs_update(cls, project_name: str, config_name: str, config_new_name: str) -> list[str | dict[str, str]]:
         """
         Modify an existing config.
 
@@ -193,7 +205,7 @@ class APIObject:
         return [f"{cls.ROOT_URL}/configs/config", {"project": project_name, "config": config_name, "name": config_new_name}]
     
     @classmethod
-    def configs_delete(cls, project_name: str, config_name: str) -> list[str, dict[str, str]]:
+    def configs_delete(cls, project_name: str, config_name: str) -> list[str | dict[str, str]]:
         """
         Permanently delete the config.
 
@@ -204,7 +216,7 @@ class APIObject:
         return [f"{cls.ROOT_URL}/configs/config", {"project": project_name, "config": config_name}]
     
     @classmethod
-    def configs_clone(cls, project_name: str, config_name: str, config_new_name: str) -> list[str, dict[str, str]]:
+    def configs_clone(cls, project_name: str, config_name: str, config_new_name: str) -> list[str | dict[str, str]]:
         """
         Create a new branch config by cloning another. This duplicates a branch config and all its secrets.
 
@@ -216,7 +228,7 @@ class APIObject:
         return [f"{cls.ROOT_URL}/configs/config/clone", {"project": project_name, "config": config_name, "name": config_new_name}]
     
     @classmethod
-    def configs_lock(cls, project_name: str, config_name: str) -> list[str, dict[str, str]]:
+    def configs_lock(cls, project_name: str, config_name: str) -> list[str | dict[str, str]]:
         """
         Prevent the config from being renamed or deleted.
 
@@ -227,7 +239,7 @@ class APIObject:
         return [f"{cls.ROOT_URL}/configs/config/lock", {"project": project_name, "config": config_name}]
     
     @classmethod
-    def configs_unlock(cls, project_name: str, config_name: str) -> list[str, dict[str, str]]:
+    def configs_unlock(cls, project_name: str, config_name: str) -> list[str | dict[str, str]]:
         """
         Allow the config to be renamed and/or deleted.
 
@@ -238,7 +250,7 @@ class APIObject:
         return [f"{cls.ROOT_URL}/configs/config/unlock", {"project": project_name, "config": config_name}]
     
     @classmethod
-    def configs_logs(cls, project_name: str, config_name: str, page: int, per_page: int) -> list[str, dict[str, str | int]]:
+    def configs_logs(cls, project_name: str, config_name: str, page: int, per_page: int) -> list[str | dict[str, str | int]]:
         """
         Config Logs.
 
@@ -251,7 +263,7 @@ class APIObject:
         return [f"{cls.ROOT_URL}/configs/config/logs", {"project": project_name, "config": config_name, "page": page, "per_page": per_page}]
     
     @classmethod
-    def configs_logs_retrieve(cls, project_name: str, config_name: str, log_id: str) -> list[str, dict[str, str]]:
+    def configs_logs_retrieve(cls, project_name: str, config_name: str, log_id: str) -> list[str | dict[str, str]]:
         """
         Config Log.
 
@@ -263,7 +275,7 @@ class APIObject:
         return [f"{cls.ROOT_URL}/configs/config/logs", {"project": project_name, "config": config_name, "log": log_id}]
     
     @classmethod
-    def configs_logs_rollback(cls, project_name: str, config_name: str, log_id: str) -> list[str, dict[str, str]]:
+    def configs_logs_rollback(cls, project_name: str, config_name: str, log_id: str) -> list[str | dict[str, str]]:
         """
         Config Log.
 
@@ -274,4 +286,61 @@ class APIObject:
         """
         return [f"{cls.ROOT_URL}/configs/config/logs/log/rollback", {"project": project_name, "config": config_name, "log": log_id}]
 
+    
+class API(APIObject):
+    def __init__(self, api_key: str | None = None, user_name: str | None = None, password: str | None = None) -> None:
+        self.api_key = api_key
+        self.user_name = user_name
+        self.password = password
+    
+    def cred_exception_checker(self) -> dict[str, str]:
+        """
+        Callback for errors.
+        """
 
+        # TODO: 나중에 사용자 정의 Exception class 만들어서 처리하도록 하자.
+        if self.user_name:
+            user_name = self.user_name
+        else:
+            raise Exception("User name is not set.")
+
+        if self.password:
+            password = self.password
+        else: 
+            raise Exception("Password is not set.")
+        
+        return {
+            "user_name": user_name,
+            "password": password
+        }
+        
+    
+    def get_retrieve_workspace(self):
+        cred = self.cred_exception_checker()
+        resp = httpx.get(
+            url=self.workspace(),
+            auth=httpx.BasicAuth(
+                username=cred["user_name"],
+                password=cred["password"],
+            )
+        )
+        if resp.status_code != 200:
+            # TODO: 나중에 사용자 정의 Exception class 만들어서 처리하도록 하자.
+            raise Exception(f"{resp.status_code} {resp.reason}")
+        return resp.json()
+    
+    def post_update_workspace(self, workspace_name: str, billing_email: str):
+        cred = self.cred_exception_checker()
+        resp = httpx.post(
+            url=self.workspace(),
+            auth=httpx.BasicAuth(
+                username=cred['user_name'],
+                password=cred['password'],
+            ),
+            json={"name": workspace_name, "billing_email": billing_email}
+        )
+        if resp.status_code != 200:
+            # TODO: 나중에 사용자 정의 Exception class 만들어서 처리하도록 하자.
+            raise Exception(f"{resp.status_code}")
+        return resp.json()
+        

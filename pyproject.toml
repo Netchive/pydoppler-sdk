@@ -6,8 +6,6 @@ build-backend = "flit_core.buildapi"
 name = "pydoppler"
 authors = [{name = "Euiseo Cha", email = "zeroday0619_dev@outlook.com"}]
 maintainers = [{name = "Euiseo Cha", email = "zeroday0619_dev@outlook.com"}]
-license = "LICENSE"
-version = "0.1.0"
 readme = "README.md"
 
 classifiers = [
