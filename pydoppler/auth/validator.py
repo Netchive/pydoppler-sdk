@@ -7,7 +7,6 @@ from pydoppler.types.auth import SCIMToken
 from pydoppler.types.auth import AuditToken
 
 
-
 def check_personal_token(token: str) -> bool:
     """
     Check if the personal token is valid.
@@ -19,6 +18,7 @@ def check_personal_token(token: str) -> bool:
         return True
     else:
         return False
+
 
 def check_service_token(token: str) -> bool:
     """
@@ -32,6 +32,7 @@ def check_service_token(token: str) -> bool:
     else:
         return False
 
+
 def check_cli_token(token: str) -> bool:
     """
     Check if the CLI token is valid.
@@ -43,6 +44,7 @@ def check_cli_token(token: str) -> bool:
         return True
     else:
         return False
+
 
 def check_scim_token(token: str) -> bool:
     """
@@ -56,6 +58,7 @@ def check_scim_token(token: str) -> bool:
     else:
         return False
 
+
 def check_audit_token(token: str) -> bool:
     """
     Check if the audit token is valid.
@@ -67,6 +70,7 @@ def check_audit_token(token: str) -> bool:
         return True
     else:
         return False
+
 
 def check_token(token: str) -> PersonalToken | ServiceToken | CLIToken | SCIMToken | AuditToken:
     """
