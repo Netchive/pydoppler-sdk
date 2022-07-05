@@ -18,10 +18,6 @@ class HTTP:
     def __init__(self, token: str):
         self._basic_auth = basic_auth_header_value(doppler_token=check_token(token))
 
-    def sessions(self) -> Client:
-        _client = Client(headers=self._basic_auth)
-        return _client
-
     def get(self, endpoint: str, params: dict | None) -> dict:
         """HTTP GET request
 
@@ -29,19 +25,19 @@ class HTTP:
         :param params:
         :return:
         """
-        session = self.sessions()
-        response = session.get(url=endpoint, params=params)
-        if not response.is_success:
-            if not response.is_server_error:
-                raise PydopplerError(
-                    status_code=response.status_code, message=response.json()["message"]
-                )
+        with Client(headers={"Authorization": self._basic_auth}) as client:
+            response = client.get(url=endpoint, params=params)
+            if not response.is_success:
+                if not response.is_server_error:
+                    raise PydopplerError(
+                        status_code=response.status_code, message=response.json()["message"]
+                    )
+                else:
+                    raise PydopplerError(
+                        status_code=response.status_code, message="Doppler API Server Error"
+                    )
             else:
-                raise PydopplerError(
-                    status_code=response.status_code, message="Doppler API Server Error"
-                )
-        else:
-            return response.json()
+                return response.json()
 
     def post(
         self,
@@ -58,19 +54,19 @@ class HTTP:
         :param data: data
         :return: response json data
         """
-        session = self.sessions()
-        response = session.post(url=endpoint, params=params, json=json_data, data=data)
-        if not response.is_success:
-            if not response.is_server_error:
-                raise PydopplerError(
-                    status_code=response.status_code, message=response.json()["message"]
-                )
+        with Client(headers={"Authorization": self._basic_auth}) as client:
+            response = client.post(url=endpoint, params=params, json=json_data, data=data)
+            if not response.is_success:
+                if not response.is_server_error:
+                    raise PydopplerError(
+                        status_code=response.status_code, message=response.json()["message"]
+                    )
+                else:
+                    raise PydopplerError(
+                        status_code=response.status_code, message="Doppler API Server Error"
+                    )
             else:
-                raise PydopplerError(
-                    status_code=response.status_code, message="Doppler API Server Error"
-                )
-        else:
-            return response.json()
+                return response.json()
 
 
 __all__ = ["PydopplerError", "HTTP", "Endpoints"]

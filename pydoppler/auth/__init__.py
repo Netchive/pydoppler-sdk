@@ -10,4 +10,4 @@ def basic_auth_header_value(doppler_token: Tokens) -> str:
     return f"Basic {token}"
 
 
-__all__ = ["basic_auth_header_value", "validator.pyi"]
+__all__ = ["basic_auth_header_value", "validator"]
