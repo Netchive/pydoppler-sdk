@@ -1,6 +1,7 @@
 from httpx import Client
-from pydoppler.auth.vaildator import check_token
 from pydoppler.auth import basic_auth_header_value
+from pydoppler.auth import check_token
+from pydoppler.core.endpoint import Endpoints
 
 
 class PydopplerError(Exception):
@@ -15,14 +16,10 @@ class PydopplerError(Exception):
 
 class HTTP:
     def __init__(self, token: str):
-        self._basic_auth = basic_auth_header_value(
-            doppler_token=check_token(token)
-        )
+        self._basic_auth = basic_auth_header_value(doppler_token=check_token(token))
 
     def sessions(self) -> Client:
-        _client = Client(
-            headers=self._basic_auth
-        )
+        _client = Client(headers=self._basic_auth)
         return _client
 
     def get(self, endpoint: str, params: dict | None) -> dict:
@@ -37,18 +34,22 @@ class HTTP:
         if not response.is_success:
             if not response.is_server_error:
                 raise PydopplerError(
-                    status_code=response.status_code,
-                    message=response.json()["message"]
+                    status_code=response.status_code, message=response.json()["message"]
                 )
             else:
                 raise PydopplerError(
-                    status_code=response.status_code,
-                    message="Doppler API Server Error"
+                    status_code=response.status_code, message="Doppler API Server Error"
                 )
         else:
             return response.json()
 
-    def post(self, endpoint: str, params: dict | None, json_data: dict | None, data: dict | None) -> dict:
+    def post(
+        self,
+        endpoint: str,
+        params: dict | None,
+        json_data: dict | None,
+        data: dict | None,
+    ) -> dict:
         """HTTP POST request
 
         :param endpoint: api url
@@ -62,13 +63,14 @@ class HTTP:
         if not response.is_success:
             if not response.is_server_error:
                 raise PydopplerError(
-                    status_code=response.status_code,
-                    message=response.json()["message"]
+                    status_code=response.status_code, message=response.json()["message"]
                 )
             else:
                 raise PydopplerError(
-                    status_code=response.status_code,
-                    message="Doppler API Server Error"
+                    status_code=response.status_code, message="Doppler API Server Error"
                 )
         else:
             return response.json()
+
+
+__all__ = ["PydopplerError", "HTTP", "Endpoints"]

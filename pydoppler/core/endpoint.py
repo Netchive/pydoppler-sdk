@@ -1,5 +1,5 @@
 class Endpoints:
-    ROOT_URL = 'https://api.doppler.io/v3'
+    ROOT_URL = "https://api.doppler.io/v3"
 
     @classmethod
     def workspace(cls) -> str:
