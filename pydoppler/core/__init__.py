@@ -19,7 +19,9 @@ class HTTP:
         self._basic_auth = basic_auth_header_value(doppler_token=check_token(token))
 
     def sessions(self) -> Client:
-        _client = Client(headers=self._basic_auth)
+        _client = Client(headers={
+            "Authorization": self._basic_auth
+        })
         return _client
 
     def get(self, endpoint: str, params: dict | None) -> dict:
