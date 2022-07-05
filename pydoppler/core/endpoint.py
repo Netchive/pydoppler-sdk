@@ -1,5 +1,5 @@
 class Endpoints:
-    ROOT_URL = "https://api.doppler.io/v3"
+    ROOT_URL = "https://api.doppler.com/v3"
 
     @classmethod
     def workspace(cls) -> str:
@@ -29,7 +29,7 @@ class Endpoints:
         return f"{cls.activity_logs()}/log"
 
     @classmethod
-    async def projects(cls) -> str:
+    def projects(cls) -> str:
         """
         Endpoint: /v3/projects
 
