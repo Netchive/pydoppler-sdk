@@ -5,7 +5,7 @@ from pydoppler.core.endpoint import Endpoints
 
 
 class PydopplerError(Exception):
-    def __init__(self, message, status_code):
+    def __init__(self, message, status_code) -> None:
         self.message = message
         self.status_code = status_code
         super().__init__(message)
@@ -18,12 +18,16 @@ class HTTP:
     def __init__(self, token: str):
         self._basic_auth = basic_auth_header_value(doppler_token=check_token(token))
 
-    def get(self, endpoint: str, params: dict | None) -> dict:
-        """HTTP GET request
+    def _get(
+            self,
+            endpoint: str,
+            params: dict | None = None,
+    ) -> dict:
+        """HTTP GET Method
 
         :param endpoint: doppler api url
-        :param params:
-        :return:
+        :param params: request params dictionary
+        :return: http response json object
         """
         with Client(headers={"Authorization": self._basic_auth}) as client:
             response = client.get(url=endpoint, params=params)
@@ -39,23 +43,49 @@ class HTTP:
             else:
                 return response.json()
 
-    def post(
+    def _post(
         self,
         endpoint: str,
-        params: dict | None,
-        json_data: dict | None,
-        data: dict | None,
+        params: dict | None = None,
+        json_data: dict | None = None,
+        data: dict | None = None,
     ) -> dict:
-        """HTTP POST request
+        """HTTP POST Method
 
-        :param endpoint: api url
-        :param params: params dictionary
-        :param json_data: json data
-        :param data: data
+        :param endpoint: doppler api url
+        :param params: request params dictionary
+        :param json_data: request json data
+        :param data: request body data
         :return: response json data
         """
         with Client(headers={"Authorization": self._basic_auth}) as client:
             response = client.post(url=endpoint, params=params, json=json_data, data=data)
+            if not response.is_success:
+                if not response.is_server_error:
+                    raise PydopplerError(
+                        status_code=response.status_code, message=response.json()["message"]
+                    )
+                else:
+                    raise PydopplerError(
+                        status_code=response.status_code, message="Doppler API Server Error"
+                    )
+            else:
+                return response.json()
+
+    def _delete(
+            self,
+            endpoint: str,
+            params: dict | None,
+    ) -> dict:
+        """HTTP DELETE Method
+
+        :param endpoint: doppler api url
+        :param params: request params dictionary
+        :return: http response json object
+        """
+
+        with Client(headers={"Authorization": self._basic_auth}) as client:
+            response = client.delete(url=endpoint, params=params)
             if not response.is_success:
                 if not response.is_server_error:
                     raise PydopplerError(
