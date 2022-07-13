@@ -7,6 +7,7 @@ __version__ = "0.1.0"
 
 from pydoppler.doppler import Doppler as _Doppler
 
+
 Doppler = _Doppler
 
 __all__ = ["Doppler"]

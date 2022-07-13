@@ -20,8 +20,15 @@ class HTTP:
         data: dict | None = ...,
     ) -> dict: ...
     def _delete(
-            self: Self,
-            endpoint: str,
-            params: dict | None = ...,
+        self: Self,
+        endpoint: str,
+        params: dict | None = ...,
     ) -> dict:...
+    def _put(
+        self: Self,
+        endpoint: str,
+        params: dict | None = ...,
+        json_data: dict | None = ...,
+        data: dict | None = ...,
+    ) -> dict: ...
 
