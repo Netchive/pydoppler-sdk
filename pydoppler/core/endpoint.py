@@ -105,7 +105,7 @@ class Endpoints:
         """
         Endpoint: /v3/configs/config/unlock
 
-        :return: https://api.doppler.io/v3/configs/config/unlock
+        :return: https://api.doppler.com/v3/configs/config/unlock
         """
         return f"{cls.config()}/unlock"
 
@@ -114,9 +114,18 @@ class Endpoints:
         """
         Endpoint: /v3/configs/config/logs
 
-        :return: https://api.doppler.io/v3/configs/config/logs
+        :return: https://api.doppler.com/v3/configs/config/logs
         """
         return f"{cls.config()}/logs"
+
+    @classmethod
+    def config_log(cls) -> str:
+        """
+        Endpoint: /v3/configs/config/logs/log
+
+        :return: https://api.doppler.com/v3/configs/config/logs/log
+        """
+        return f"{cls.config_logs()}/log"
 
     @classmethod
     def configs_log_rollback(cls) -> str:
