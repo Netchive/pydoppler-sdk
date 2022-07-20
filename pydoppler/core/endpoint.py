@@ -146,6 +146,15 @@ class Endpoints:
         return f"{cls.config()}/secrets"
 
     @classmethod
+    def secret_url(cls) -> str:
+        """
+        Endpoint: /v3/configs/config/secret
+
+        :return: https://api.doppler.com/v3/configs/config/secret
+        """
+        return f"{cls.config()}/secret"
+
+    @classmethod
     def secrets_download(cls) -> str:
         """
         Endpoint: /v3/configs/config/secrets/download

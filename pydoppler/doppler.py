@@ -355,7 +355,14 @@ class Doppler(HTTP):
         )
         return res
 
-    def fetch_secrets(self, project_name: str, config_name: str, include_dynamic_secrets: bool = False, dynamic_secrets_ttl_sec: int = 1800, accepts: str = "application/json"):
+    def fetch_secrets(
+        self,
+        project_name: str,
+        config_name: str,
+        include_dynamic_secrets: bool = False,
+        dynamic_secrets_ttl_sec: int = 1800,
+        accepts: str = "application/json",
+    ):
         """
         List all secrets
 
@@ -373,8 +380,70 @@ class Doppler(HTTP):
                 project=project_name,
                 config=config_name,
                 include_dynamic_secrets=include_dynamic_secrets,
-                dynamic_secrets_ttl_sec=dynamic_secrets_ttl_sec
+                dynamic_secrets_ttl_sec=dynamic_secrets_ttl_sec,
             ),
-            headers=dict(accepts=accepts)
+            headers=dict(accepts=accepts),
+        )
+        return res
+
+    def retrieve_secret(
+        self, project_name: str, config_name: str, secret_name: str
+    ) -> dict:
+        """retrieve secret.
+
+        :param project_name: project name:
+        :param config_name: config name
+        :param secret_name: secret name
+        :return: secret
+        """
+        res = self._get(
+            endpoint=Endpoints.secret_url(),
+            params=dict(project=project_name, config=config_name, name=secret_name),
+        )
+        return res
+
+    def update_secrets(
+        self, project_name: str, config_name: str, secrets: dict
+    ) -> dict:
+        """Update secrets.
+
+        :param project_name: project name
+        :param config_name: config name
+        :param secrets: Object of secrets you would like to save to the config.
+        :return: secret
+        """
+        res = self._post(
+            endpoint=Endpoints.secrets_url(),
+            json_data=dict(project=project_name, config=config_name, secrets=secrets),
+        )
+        return res
+
+    def download_secrets(
+        self,
+        project_name: str,
+        config_name: str,
+        name_transformer: str = "upper-snake",
+        include_dynamic_secrets: bool = False,
+        dynamic_secrets_ttl_sec: int = 1800,
+    ) -> dict:
+        """Download secrets.
+
+        :param project_name: project name
+        :param config_name: config name
+        :param name_transformer: Transform secret names to a different case
+        :param include_dynamic_secrets: Whether or not to issue leases and include dynamic secret values for the config
+        :param dynamic_secrets_ttl_sec: The number of seconds until dynamic leases expire.
+        Must be used with include_dynamic_secrets. Defaults to 1800 (30 minutes).
+        :return: secrets
+        """
+        res = self._get(
+            endpoint=Endpoints.secrets_download(),
+            params=dict(
+                project=project_name,
+                config=config_name,
+                name_transformer=name_transformer,
+                include_dynamic_secrets=include_dynamic_secrets,
+                dynamic_secrets_ttl_sec=dynamic_secrets_ttl_sec,
+            ),
         )
         return res
