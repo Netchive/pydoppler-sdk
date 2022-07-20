@@ -10,7 +10,8 @@ class HTTP:
     def _get(
         self: Self,
         endpoint: str,
-        params: dict | None = ...
+        params: dict | None = ...,
+        headers: dict | None = ...
     ) -> dict: ...
     def _post(
         self: Self,
@@ -18,11 +19,13 @@ class HTTP:
         params: dict | None = ...,
         json_data: dict | None = ...,
         data: dict | None = ...,
+        headers: dict | None = ...
     ) -> dict: ...
     def _delete(
         self: Self,
         endpoint: str,
         params: dict | None = ...,
+        headers: dict | None = ...
     ) -> dict:...
     def _put(
         self: Self,
@@ -30,5 +33,6 @@ class HTTP:
         params: dict | None = ...,
         json_data: dict | None = ...,
         data: dict | None = ...,
+        headers: dict | None = ...
     ) -> dict: ...
 

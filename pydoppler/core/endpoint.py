@@ -6,7 +6,7 @@ class Endpoints:
         """
         Endpoint: /v3/workspaces
 
-        :return: https://api.doppler.io/v3/workspaces
+        :return: https://api.doppler.com/v3/workspaces
         """
         return f"{cls.ROOT_URL}/workspace"
 
@@ -15,7 +15,7 @@ class Endpoints:
         """
         Endpoint: /v3/logs
 
-        :return: https://api.doppler.io/v3/logs
+        :return: https://api.doppler.com/v3/logs
         """
         return f"{cls.ROOT_URL}/logs"
 
@@ -24,7 +24,7 @@ class Endpoints:
         """
         Endpoint: /v3/logs/log
 
-        :return: https://api.doppler.io/v3/logs/log
+        :return: https://api.doppler.com/v3/logs/log
         """
         return f"{cls.activity_logs()}/log"
 
@@ -33,7 +33,7 @@ class Endpoints:
         """
         Endpoint: /v3/projects
 
-        :return: https://api.doppler.io/v3/projects
+        :return: https://api.doppler.com/v3/projects
         """
         return f"{cls.ROOT_URL}/projects"
 
@@ -42,7 +42,7 @@ class Endpoints:
         """
         Endpoint: /v3/projects/project
 
-        :return: https://api.doppler.io/v3/projects/project
+        :return: https://api.doppler.com/v3/projects/project
         """
         return f"{cls.projects()}/project"
 
@@ -51,7 +51,7 @@ class Endpoints:
         """
         Endpoint: /v3/environments
 
-        :return: https://api.doppler.io/v3/environments
+        :return: https://api.doppler.com/v3/environments
         """
         return f"{cls.ROOT_URL}/environments"
 
@@ -60,7 +60,7 @@ class Endpoints:
         """
         Endpoint: /v3/environments/environment
 
-        :return: https://api.doppler.io/v3/environments/environment
+        :return: https://api.doppler.com/v3/environments/environment
         """
         return f"{cls.environments()}/environment"
 
@@ -69,7 +69,7 @@ class Endpoints:
         """
         Endpoint: /v3/configs
 
-        :return: https://api.doppler.io/v3/configs
+        :return: https://api.doppler.com/v3/configs
         """
         return f"{cls.ROOT_URL}/configs"
 
@@ -78,7 +78,7 @@ class Endpoints:
         """
         Endpoint: /v3/configs
 
-        :return: https://api.doppler.io/v3/configs/config
+        :return: https://api.doppler.com/v3/configs/config
         """
         return f"{cls.configs()}/config"
 
@@ -87,7 +87,7 @@ class Endpoints:
         """
         Endpoint: /v3/configs/config/clone
 
-        :return: https://api.doppler.io/v3/configs/config/clone
+        :return: https://api.doppler.com/v3/configs/config/clone
         """
         return f"{cls.config()}/clone"
 
@@ -96,7 +96,7 @@ class Endpoints:
         """
         Endpoint: /v3/configs/config/lock
 
-        :return: https://api.doppler.io/v3/configs/config/lock
+        :return: https://api.doppler.com/v3/configs/config/lock
         """
         return f"{cls.config()}/lock"
 
@@ -132,6 +132,24 @@ class Endpoints:
         """
         Endpoint: /v3/configs/config/logs/log/rollback
 
-        :return: https://api.doppler.io/v3/configs/config/logs/log/rollback
+        :return: https://api.doppler.com/v3/configs/config/logs/log/rollback
         """
         return f"{cls.config_logs()}/log/rollback"
+
+    @classmethod
+    def secrets_url(cls) -> str:
+        """
+        Endpoint: /v3/configs/config/secrets
+
+        :return: https://api.doppler.com/v3/configs/config/secrets
+        """
+        return f"{cls.config()}/secrets"
+
+    @classmethod
+    def secrets_download(cls) -> str:
+        """
+        Endpoint: /v3/configs/config/secrets/download
+
+        :return: https://api.doppler.com/v3/configs/config/secrets/download
+        """
+        return f"{cls.secrets_url()}/download"

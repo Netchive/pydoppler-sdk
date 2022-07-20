@@ -32,7 +32,8 @@ class Doppler(HTTP):
         return res
 
     def fetch_activity_logs(self, page: int = 1, per_page: int = 20) -> dict:
-        """
+        """activity logs
+
         :param page: Page number
         :param per_page: Items per page
         :return:activity logs
@@ -351,5 +352,29 @@ class Doppler(HTTP):
         res = self._post(
             endpoint=Endpoints.configs_log_rollback(),
             params=dict(project=project, config=config, log=log),
+        )
+        return res
+
+    def fetch_secrets(self, project_name: str, config_name: str, include_dynamic_secrets: bool = False, dynamic_secrets_ttl_sec: int = 1800, accepts: str = "application/json"):
+        """
+        List all secrets
+
+        :param project_name: project name
+        :param config_name: config name
+        :param include_dynamic_secrets: Whether to issue leases and include dynamic secret values for the config
+        :param dynamic_secrets_ttl_sec: The number of seconds until dynamic leases expire.
+        Must be used with include_dynamic_secrets. Defaults to 1800 (30 minutes).
+        :param accepts: Available options are: application/json, text/plain
+        :return: secrets
+        """
+        res = self._get(
+            endpoint=Endpoints.secrets_url(),
+            params=dict(
+                project=project_name,
+                config=config_name,
+                include_dynamic_secrets=include_dynamic_secrets,
+                dynamic_secrets_ttl_sec=dynamic_secrets_ttl_sec
+            ),
+            headers=dict(accepts=accepts)
         )
         return res
