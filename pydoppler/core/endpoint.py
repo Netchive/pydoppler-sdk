@@ -1,5 +1,6 @@
 class Endpoints:
     ROOT_URL = "https://api.doppler.com/v3"
+    V1_ROOT_URL = "https://api.doppler.com/v1"
 
     @classmethod
     def workspace(cls) -> str:
@@ -162,3 +163,84 @@ class Endpoints:
         :return: https://api.doppler.com/v3/configs/config/secrets/download
         """
         return f"{cls.secrets_url()}/download"
+
+    @classmethod
+    def dynamic_secret_leases(cls) -> str:
+        """
+        Endpoint: /v3/configs/config/dynamic_secrets/dynamic_secret/leases
+
+        :return: https://api.doppler.com/v3/configs/config/dynamic_secrets/dynamic_secret/leases
+        """
+        return f"{cls.config()}/dynamic_secrets/dynamic_secret/leases"
+
+    @classmethod
+    def dynamic_secret_lease(cls) -> str:
+        """
+        Endpoint: /v3/configs/config/dynamic_secrets/dynamic_secret/leases/lease
+
+        :return: https://api.doppler.com/v3/configs/config/dynamic_secrets/dynamic_secret/leases/lease
+        """
+        return f"{cls.config()}/dynamic_secrets/dynamic_secret/leases/lease"
+
+    @classmethod
+    def service_tokens(cls) -> str:
+        """
+        Endpoint: /v3/configs/config/tokens
+
+        :return: https://api.doppler.com/v3/configs/config/tokens
+        """
+        return f"{cls.config()}/tokens"
+
+    @classmethod
+    def service_token(cls) -> str:
+        """
+        Endpoint: /v3/configs/config/tokens/token
+
+        :return: https://api.doppler.com/v3/configs/config/tokens/token
+        """
+        return f"{cls.config()}/tokens/token"
+
+    @classmethod
+    def audit_workspace(cls) -> str:
+        """
+        Endpoint: /v3/workplace
+
+        :return: https://api.doppler.com/v3/workplace
+        """
+        return f"{cls.ROOT_URL}/workplace"
+
+    @classmethod
+    def audit_workspace_users(cls) -> str:
+        """
+        Endpoint: /v3/workplace/users
+
+        :return: https://api.doppler.com/v3/workplace/users
+        """
+        return f"{cls.ROOT_URL}/workplace/users"
+
+    @classmethod
+    def audit_workspace_user(cls, workplace_user_id: str) -> str:
+        """
+        Endpoint: /v3/workplace/users
+
+        :return: https://api.doppler.com/v3/workplace/users/{workplace_user_id}
+        """
+        return f"{cls.ROOT_URL}/workplace/users/{workplace_user_id}"
+
+    @classmethod
+    def share_plain_text(cls) -> str:
+        """
+        Endpoint: /v1/share/secrets/plain
+
+        :return:  https://api.doppler.com/v1/share/secrets/plain
+        """
+        return f"{cls.V1_ROOT_URL}/share/secrets/plain"
+
+    @classmethod
+    def share_e2e_encrypted(cls) -> str:
+        """
+        Endpoint: /v1/share/secrets/encrypted
+
+        :return: https://api.doppler.com/v1/share/secrets/encrypted
+        """
+        return f"{cls.V1_ROOT_URL}/share/secrets/encrypted"
