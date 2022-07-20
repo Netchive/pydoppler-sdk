@@ -22,21 +22,29 @@ class HTTP:
         self,
         endpoint: str,
         params: dict | None = None,
+        headers: dict | None = None
     ) -> dict:
         """HTTP GET Method
 
         :param endpoint: doppler api url
         :param params: request params dictionary
+        :param headers: request headers dictionary
         :return: http response json object
         """
         with Client(headers={"Authorization": self._basic_auth}) as client:
-            response = client.get(url=endpoint, params=params)
+            response = client.get(url=endpoint, params=params, headers=headers)
             if not response.is_success:
                 if not response.is_server_error:
-                    raise PydopplerError(
-                        status_code=response.status_code,
-                        message=response.json()["message"],
-                    )
+                    if response.json().get("messages"):
+                        raise PydopplerError(
+                            status_code=response.status_code,
+                            message=response.json()["messages"],
+                        )
+                    else:
+                        raise PydopplerError(
+                            status_code=response.status_code,
+                            message=str(response.json())
+                        )
                 else:
                     raise PydopplerError(
                         status_code=response.status_code,
@@ -51,6 +59,7 @@ class HTTP:
         params: dict | None = None,
         json_data: dict | None = None,
         data: dict | None = None,
+        headers: dict | None = None
     ) -> dict:
         """HTTP POST Method
 
@@ -58,11 +67,12 @@ class HTTP:
         :param params: request params dictionary
         :param json_data: request json data
         :param data: request body data
+        :param headers: request headers dictionary
         :return: response json data
         """
         with Client(headers={"Authorization": self._basic_auth}) as client:
             response = client.post(
-                url=endpoint, params=params, json=json_data, data=data
+                url=endpoint, params=params, json=json_data, data=data, headers=headers
             )
             if not response.is_success:
                 if not response.is_server_error:
@@ -82,16 +92,18 @@ class HTTP:
         self,
         endpoint: str,
         params: dict | None,
+        headers: dict | None = None
     ) -> dict:
         """HTTP DELETE Method
 
         :param endpoint: doppler api url
         :param params: request params dictionary
+        :param headers: request headers dictionary
         :return: http response json object
         """
 
         with Client(headers={"Authorization": self._basic_auth}) as client:
-            response = client.delete(url=endpoint, params=params)
+            response = client.delete(url=endpoint, params=params, headers=headers)
             if not response.is_success:
                 if not response.is_server_error:
                     raise PydopplerError(
@@ -112,6 +124,7 @@ class HTTP:
         params: dict | None = None,
         json_data: dict | None = None,
         data: dict | None = None,
+        headers: dict | None = None
     ):
         """HTTP PUT Method
 
@@ -119,11 +132,12 @@ class HTTP:
         :param params: request params dictionary
         :param json_data: request json data
         :param data: request body data
+        :param headers: request headers dictionary
         :return: response json data
         """
         with Client(headers={"Authorization": self._basic_auth}) as client:
             response = client.put(
-                url=endpoint, params=params, json=json_data, data=data
+                url=endpoint, params=params, json=json_data, data=data, headers=headers
             )
             if not response.is_success:
                 if not response.is_server_error:

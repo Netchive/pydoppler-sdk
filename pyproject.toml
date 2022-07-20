@@ -33,3 +33,14 @@ lint = [
 
 [project.urls]
 Source = "https://github.com/Netchive/pydoppler-sdk"
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+exclude = [
+    '^__init__\.py$',  # TOML literal string (single-quotes, no escaping necessary)
+    "^__init__\\.py$",  # TOML basic string (double-quotes, backslash and other characters need escaping)
+]
+[[tool.mypy.overrides]]
+module = "pydoppler"
