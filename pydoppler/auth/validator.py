@@ -75,8 +75,7 @@ def check_audit_token(token: str) -> bool:
 def check_token(
     token: str,
 ) -> PersonalToken | ServiceToken | CLIToken | SCIMToken | AuditToken:
-    """
-    Check if the token is valid.
+    """Check if the token is valid.
 
     :param token: The token to check.
     :return: True if the token is valid, False otherwise.

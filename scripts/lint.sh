@@ -3,6 +3,6 @@
 set -e
 set -x
 
-flake8 pydoppler tests
-black pydoppler tests --check
-isort pydoppler tests --check-only
+flake8 pydoppler pydoppler-stubs tests
+black pydoppler pydoppler-stubs tests --check
+isort pydoppler pydoppler-stubs tests --check-only
