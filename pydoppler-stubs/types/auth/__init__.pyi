@@ -1,7 +1,8 @@
 from typing import NewType, Type, Union
 
+
 PersonalToken: NewType("PersonalToken", str)
-ServiceToken:  NewType("ServiceToken", str)
+ServiceToken: NewType("ServiceToken", str)
 CLIToken: NewType("CLIToken", str)
 SCIMToken: NewType("SCIMToken", str)
 AuditToken: NewType("AuditToken", str)

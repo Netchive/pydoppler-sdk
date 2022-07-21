@@ -19,10 +19,7 @@ class HTTP:
         self._basic_auth = basic_auth_header_value(doppler_token=check_token(token))
 
     def _get(
-        self,
-        endpoint: str,
-        params: dict | None = None,
-        headers: dict | None = None
+        self, endpoint: str, params: dict | None = None, headers: dict | None = None
     ) -> dict:
         """HTTP GET Method
 
@@ -43,7 +40,7 @@ class HTTP:
                     else:
                         raise PydopplerError(
                             status_code=response.status_code,
-                            message=str(response.json())
+                            message=str(response.json()),
                         )
                 else:
                     raise PydopplerError(
@@ -59,7 +56,7 @@ class HTTP:
         params: dict | None = None,
         json_data: dict | None = None,
         data: dict | None = None,
-        headers: dict | None = None
+        headers: dict | None = None,
     ) -> dict:
         """HTTP POST Method
 
@@ -89,10 +86,7 @@ class HTTP:
                 return response.json()
 
     def _delete(
-        self,
-        endpoint: str,
-        params: dict | None,
-        headers: dict | None = None
+        self, endpoint: str, params: dict | None, headers: dict | None = None
     ) -> dict:
         """HTTP DELETE Method
 
@@ -124,7 +118,7 @@ class HTTP:
         params: dict | None = None,
         json_data: dict | None = None,
         data: dict | None = None,
-        headers: dict | None = None
+        headers: dict | None = None,
     ):
         """HTTP PUT Method
 
