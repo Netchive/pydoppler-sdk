@@ -73,10 +73,16 @@ class HTTP:
             )
             if not response.is_success:
                 if not response.is_server_error:
-                    raise PydopplerError(
-                        status_code=response.status_code,
-                        message=response.json()["messages"],
-                    )
+                    if response.json().get("messages"):
+                        raise PydopplerError(
+                            status_code=response.status_code,
+                            message=response.json()["messages"],
+                        )
+                    else:
+                        raise PydopplerError(
+                            status_code=response.status_code,
+                            message=str(response.json()),
+                        )
                 else:
                     raise PydopplerError(
                         status_code=response.status_code,
@@ -100,10 +106,16 @@ class HTTP:
             response = client.delete(url=endpoint, params=params, headers=headers)
             if not response.is_success:
                 if not response.is_server_error:
-                    raise PydopplerError(
-                        status_code=response.status_code,
-                        message=response.json()["messages"],
-                    )
+                    if response.json().get("messages"):
+                        raise PydopplerError(
+                            status_code=response.status_code,
+                            message=response.json()["messages"],
+                        )
+                    else:
+                        raise PydopplerError(
+                            status_code=response.status_code,
+                            message=str(response.json()),
+                        )
                 else:
                     raise PydopplerError(
                         status_code=response.status_code,
@@ -135,10 +147,16 @@ class HTTP:
             )
             if not response.is_success:
                 if not response.is_server_error:
-                    raise PydopplerError(
-                        status_code=response.status_code,
-                        message=response.json()["messages"],
-                    )
+                    if response.json().get("messages"):
+                        raise PydopplerError(
+                            status_code=response.status_code,
+                            message=response.json()["messages"],
+                        )
+                    else:
+                        raise PydopplerError(
+                            status_code=response.status_code,
+                            message=str(response.json()),
+                        )
                 else:
                     raise PydopplerError(
                         status_code=response.status_code,
