@@ -75,7 +75,7 @@ class HTTP:
                 if not response.is_server_error:
                     raise PydopplerError(
                         status_code=response.status_code,
-                        message=response.json()["message"],
+                        message=response.json()["messages"],
                     )
                 else:
                     raise PydopplerError(
@@ -102,7 +102,7 @@ class HTTP:
                 if not response.is_server_error:
                     raise PydopplerError(
                         status_code=response.status_code,
-                        message=response.json()["message"],
+                        message=response.json()["messages"],
                     )
                 else:
                     raise PydopplerError(
@@ -137,7 +137,7 @@ class HTTP:
                 if not response.is_server_error:
                     raise PydopplerError(
                         status_code=response.status_code,
-                        message=response.json()["message"],
+                        message=response.json()["messages"],
                     )
                 else:
                     raise PydopplerError(
